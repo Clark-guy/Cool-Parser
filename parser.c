@@ -35,9 +35,10 @@ int main(int argc, char *argv[]){
     // 2d array of chars to make array of token strings. 20 tokens max, 30 chars per token max
     char tokens[NUM_TOKENS][TOKEN_LENGTH];
     char str[BUFF_SIZE];
-    int c, contFlag, tokenNum, tokenChar;
+    int c, contNumFlag, contStrFlag, tokenNum, tokenChar;
     FILE *fp;
-    contFlag = 0;
+    contNumFlag = 0;
+    contStrFlag = 0;
     tokenNum = 0;
     tokenChar = 0;
     fp = fopen(argv[1], "r");
@@ -49,46 +50,59 @@ int main(int argc, char *argv[]){
         c = fgetc(fp);
         if(isalpha(c)){
             printf("char");
-            if(contFlag == 0){
+            if(contStrFlag == 0){
+                tokenChar++;
+                tokens[tokenNum][tokenChar] = '\0';
                 tokenNum++;
                 tokenChar = 0;
             }
             else{
                 tokenChar++;
             }
-            contFlag = 1;
+            contStrFlag = 1;
+            contNumFlag = 0;
             tokens[tokenNum][tokenChar] = c;
         }
-        else if(isdigit(c)){    //something wrong with digit/alpha case
+        else if(isdigit(c)){
             printf("digit");
-            if(contFlag == 0){
+            if(contNumFlag == 0){
+                tokenChar++;
+                tokens[tokenNum][tokenChar] = '\0';
                 tokenNum++;
                 tokenChar = 0;
             }
             else{
                 tokenChar++;
             }
-            contFlag = 1;
+            contNumFlag = 1;
+            contStrFlag = 0;
             tokens[tokenNum][tokenChar] = c;
         }
         else if(c == '+'){
             printf("plus");
-            contFlag = 0;
+            contStrFlag = 0;
+            contNumFlag = 0;
+            tokenChar++;
+            tokens[tokenNum][tokenChar] = '\0';
             tokenNum++;
             tokenChar = 0;
             tokens[tokenNum][tokenChar] = c;
         }
         else if(c == ' '){
             printf("space");
-            contFlag = 0;
+            contStrFlag = 0;
+            contNumFlag = 0;
             tokenNum++;
         }
         else if(c == ';'){
             printf("semi");
-            contFlag = 0;
-            tokenNum++;
-            tokenChar = 0;
-            tokens[tokenNum][tokenChar] = c;
+            contStrFlag = 0;
+            contNumFlag = 0;
+            tokenChar++;
+            tokens[tokenNum][tokenChar] = '\0';
+            //tokenNum++;
+            //tokenChar = 0;
+            //tokens[tokenNum][tokenChar] = c;
         }
         else if(c == '"')
             printf("quote");
