@@ -104,13 +104,23 @@ int main(int argc, char *argv[]){
             //tokenChar = 0;
             //tokens[tokenNum][tokenChar] = c;
         }
-        else if(c == '"')
+        else if(c == '"'){
             printf("quote");
-        else if(c == '\n')
+        }
+        else if(c == '\n'){
+            if(contStrFlag == 1 || contNumFlag == 1){
+                tokenChar++;
+                tokens[tokenNum][tokenChar] = '\0';
+            }
+            contStrFlag = 0;
+            contNumFlag = 0;
+            tokenNum++;
+            tokenChar = 0;
             printf("\n");
+        }
     }
     printf("\n");
-    char test[][30] = {{'a','b','c'},{'d','e','f'},{'h','i','j'},{'h','i','j'},{'h','i','j'},{'h','i','j'}};
+    //char test[][30] = {{'a','b','c'},{'d','e','f'},{'h','i','j'},{'h','i','j'},{'h','i','j'},{'h','i','j'}};
     printTokens(tokens);
     return 0;
 }
