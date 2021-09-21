@@ -13,9 +13,9 @@
 #include <ctype.h>
 
 
-#define BUFF_SIZE 100
-#define TOKEN_LENGTH 30
-#define NUM_TOKENS 20
+#define BUFF_SIZE 128
+#define TOKEN_LENGTH 32
+#define NUM_TOKENS 32
 
 typedef struct token {
     int val;
